@@ -94,5 +94,28 @@
       loadMainDartJs();
     }
   </script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+
+  <script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyA2bkpCdgH9fuvJ400KcQvi1lAtptSN-0Q",
+    authDomain: "flutter-e-commerce-93a8f.firebaseapp.com",
+    projectId: "flutter-e-commerce-93a8f",
+    storageBucket: "flutter-e-commerce-93a8f.appspot.com",
+    messagingSenderId: "1092827764891",
+    appId: "1:1092827764891:web:619a3734ee011fee21ce3e",
+    measurementId: "G-MHXYK881T0"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
 </body>
 </html>

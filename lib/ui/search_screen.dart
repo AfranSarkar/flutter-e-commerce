@@ -28,7 +28,9 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Container(
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection("products").where("product-name",isGreaterThanOrEqualTo: inputText)
+                          .collection("products")
+                          .where("product-name",
+                              isGreaterThanOrEqualTo: inputText)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -13,17 +13,39 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  Future addToCart()async{
+
+  Future addToCart() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
-    CollectionReference _collectionRef = FirebaseFirestore.instance.collection("users-cart-items");
-    return _collectionRef.doc(currentUser!.email).collection("items").doc().set(
-        {
-          "name":widget._product["product-name"],
-          "price":widget._product["product-price"],
-          "images":widget._product["product-img"],
-        }).then((value) => print("Added to cart"));
+    CollectionReference _collectionRef =
+        FirebaseFirestore.instance.collection("users-cart-items");
+    return _collectionRef
+        .doc(currentUser!.email)
+        .collection("items")
+        .doc()
+        .set({
+      "name": widget._product["product-name"],
+      "price": widget._product["product-price"],
+      "images": widget._product["product-img"],
+    }).then((value) => print("Added to cart"));
   }
+
+  Future addToFavourite() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection("users-favourite-items");
+    return _collectionRef
+        .doc(currentUser!.email)
+        .collection("items")
+        .doc()
+        .set({
+      "name": widget._product["product-name"],
+      "price": widget._product["product-price"],
+      "images": widget._product["product-img"],
+    }).then((value) => print("Added to favourite"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +65,32 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         actions: [
-          CircleAvatar(
-            backgroundColor: AppColors.deep_orange,
-            child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Icons.favorite_outline,
-                  color: Colors.white,
-                )),
-          )
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("users-favourite-items").doc(FirebaseAuth.instance.currentUser!.email)
+                .collection("items").where("name",isEqualTo: widget._product['product-name']).snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot){
+              if(snapshot.data==null){
+                return Text("");
+              }
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: CircleAvatar(
+                  backgroundColor: Colors.red,
+                  child: IconButton(
+                    onPressed: () => snapshot.data.docs.length==0?addToFavourite():print("Already Added"),
+                    icon: snapshot.data.docs.length==0? Icon(
+                      Icons.favorite_outline,
+                      color: Colors.white,
+                    ):Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              );
+            },
+
+          ),
         ],
       ),
       body: SafeArea(
@@ -101,7 +140,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               width: 1.sw,
               height: 56.h,
               child: ElevatedButton(
-                onPressed: () =>addToCart(),
+                onPressed: () => addToCart(),
                 child: Text(
                   "Add to cart",
                   style: TextStyle(color: Colors.white, fontSize: 18.sp),

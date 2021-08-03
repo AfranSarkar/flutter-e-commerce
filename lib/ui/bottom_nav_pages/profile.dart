@@ -51,7 +51,6 @@ class _ProfileState extends State<Profile> {
           stream: FirebaseFirestore.instance.collection("users-form-data").doc(FirebaseAuth.instance.currentUser!.email).snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot){
             var data = snapshot.data;
-
             if(data==null){
               return Center(child: CircularProgressIndicator(),);
             }

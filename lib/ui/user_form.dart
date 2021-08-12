@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/const/AppColors.dart';
 import 'package:flutter_ecommerce/ui/bottom_nav_controller.dart';
+import 'package:flutter_ecommerce/widgets/customButton.dart';
+import 'package:flutter_ecommerce/widgets/myTextField.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserForm extends StatefulWidget {
@@ -76,17 +78,8 @@ class _UserFormState extends State<UserForm> {
                 SizedBox(
                   height: 15.h,
                 ),
-                TextField(
-                  keyboardType: TextInputType.text,
-                  controller: _nameController,
-                  decoration: InputDecoration(hintText: "enter your name"),
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _phoneController,
-                  decoration:
-                      InputDecoration(hintText: "enter your phone number"),
-                ),
+                myTextField("enter your name",TextInputType.text,_nameController),
+                myTextField("enter your phone number",TextInputType.number,_phoneController),
                 TextField(
                   controller: _dobController,
                   readOnly: true,
@@ -119,32 +112,14 @@ class _UserFormState extends State<UserForm> {
                     ),
                   ),
                 ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _ageController,
-                  decoration: InputDecoration(hintText: "enter your age"),
-                ),
+                myTextField("enter your age",TextInputType.number,_ageController),
+
                 SizedBox(
                   height: 50.h,
                 ),
+
                 // elevated button
-                SizedBox(
-                  width: 1.sw,
-                  height: 56.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      sendUserDataToDB();
-                    },
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 18.sp),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: AppColors.deep_orange,
-                      elevation: 3,
-                    ),
-                  ),
-                ),
+               customButton("Continue",()=>sendUserDataToDB()),
               ],
             ),
           ),
@@ -153,3 +128,4 @@ class _UserFormState extends State<UserForm> {
     );
   }
 }
+

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/const/AppColors.dart';
 import 'package:flutter_ecommerce/ui/bottom_nav_controller.dart';
 import 'package:flutter_ecommerce/ui/registration_screen.dart';
+import 'package:flutter_ecommerce/widgets/customButton.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -217,24 +218,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 50.h,
                         ),
                         // elevated button
-                        SizedBox(
-                          width: 1.sw,
-                          height: 56.h,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              signIn();
-                            },
-                            child: Text(
-                              "SIGN IN",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 18.sp),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: AppColors.deep_orange,
-                              elevation: 3,
-                            ),
-                          ),
-                        ),
+                        customButton("Sign In", (){
+                          signIn();
+                        },),
                         SizedBox(
                           height: 20.h,
                         ),
